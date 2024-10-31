@@ -28,7 +28,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   originalData: Book;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: Book,
+    @Inject(MAT_DIALOG_DATA) public data: Book & { isEditing?: boolean },
     private dialogRef: MatDialogRef<BookDetailsComponent>,
     private bookService: BookService
   ) {
@@ -36,7 +36,7 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.isEditing = !this.data.id;
+    this.isEditing = !!this.data.isEditing
   }
 
   ngOnDestroy() {

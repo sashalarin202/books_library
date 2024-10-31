@@ -20,7 +20,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatButtonModule,
     MatIconModule,
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BookListComponent {
   books = computed(() => this.bookService.books());
@@ -29,15 +29,15 @@ export class BookListComponent {
 
   openBookForm() {
     const newBookData = { title: '', author: '', year: 0, description: '', img_src: ''};
-    this.dialog.open(BookDetailsComponent, { data: {book: newBookData} });
+    this.dialog.open(BookDetailsComponent,{ data: { ...newBookData, isEditing: true }  });
   }
 
-  // startEditing(book: Book) {
-  //   this.dialog.open(BookDetailsComponent, { data: { book, isEditing: true } });
-  // }
+  startEdit(book: Book) {
+    this.dialog.open(BookDetailsComponent, { data: { ...book, isEditing: true } });
+}
 
   openBookDetails(book: Book) {
-    this.dialog.open(BookDetailsComponent, { data: book });
+    this.dialog.open(BookDetailsComponent, { data: { ...book, isEditing: false } });
   }
 
   deleteBook(id: string) {
