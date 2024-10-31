@@ -1,0 +1,28 @@
+
+
+mat-list{
+    display: flex;
+    justify-content: center;
+
+    .book-list{
+        display: flex;
+        width: 1300px;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        .book-card {
+            display: flex;
+            width: 300px;
+            margin: 10px;
+
+            mat-card-header{
+                display: flex;
+                justify-content: center;
+            }
+            
+            img{
+                margin: 5px;
+            }
+        }
+    }
+}

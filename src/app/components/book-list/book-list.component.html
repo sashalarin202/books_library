@@ -1,0 +1,18 @@
+<h3 mat-subheader>Book List</h3>
+<button mat-raised-button class="sticky-button" (click)="openBookForm()">
+  <mat-icon>add</mat-icon>
+  Add New Book
+</button>
+<mat-list>
+  <div class="book-list">
+    <mat-card class="book-card"  appearance="outlined" *ngFor="let book of books()" (click)="openBookDetails(book)">
+      <mat-card-header>
+        <p class="title">
+          <mat-card-title>{{ book.title }}</mat-card-title>
+          <mat-card-subtitle>{{ book.author }} ({{ book.year }})</mat-card-subtitle>
+        </p>
+      </mat-card-header>
+      <img mat-card-image src={{book.img_src}}  alt="Photo of a Shiba Inu">
+    </mat-card>
+  </div>
+</mat-list>
