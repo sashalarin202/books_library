@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { BookService, Book } from '../../book.service';
-import { BookFormComponent } from '../book-form/book-form.component';
 import { BookDetailsComponent } from '../book-details/book-details.component';
 import { MatListModule } from '@angular/material/list';
 import { CommonModule } from '@angular/common';
@@ -29,16 +28,21 @@ export class BookListComponent {
   constructor(private bookService: BookService, private dialog: MatDialog) {}
 
   openBookForm() {
-    const dialogRef = this.dialog.open(BookFormComponent);
-  
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.bookService.addBook(result);
-      }
-    });
+    const newBookData = { title: '', author: '', year: 0, description: '', img_src: ''};
+    this.dialog.open(BookDetailsComponent, { data: {book: newBookData} });
   }
 
+  // startEditing(book: Book) {
+  //   this.dialog.open(BookDetailsComponent, { data: { book, isEditing: true } });
+  // }
+
   openBookDetails(book: Book) {
-    const dialogRef = this.dialog.open(BookDetailsComponent, { data: book });
+    this.dialog.open(BookDetailsComponent, { data: book });
+  }
+
+  deleteBook(id: string) {
+    if (confirm('Вы уверены, что хотите удалить эту книгу?')) {
+      this.bookService.deleteBook(id);
+    }
   }
 }

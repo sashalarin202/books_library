@@ -1,11 +1,17 @@
 <mat-card appearance="outlined">
-  <img  
+  <div class="img-wrapper">
+    <img  
     mat-card-image 
     [src]="data.img_src" 
-    alt="Фото собаки Шиба Ину"
+    alt="no image"
     [ngClass]="{ 'image-normal': !isEditing, 'image-small': isEditing }" />
+  </div>
   <mat-card-content>
-    <h3 mat-card-title>{{ data.title }}</h3>
+    <mat-form-field  *ngIf="!data.id" appearance="outline" class="input-imgLink">
+      <mat-label>Title</mat-label>
+      <input matInput [(ngModel)]="data.title" />
+    </mat-form-field>
+    <h3 *ngIf="data.id" mat-card-title>{{ data.title }}</h3>
     <div class="description" *ngIf="!isEditing; else editMode">
       <p><strong>Автор:</strong> {{ data.author }}</p>
       <p><strong>Год:</strong> {{ data.year }}</p>

@@ -13,6 +13,10 @@
         </p>
       </mat-card-header>
       <img mat-card-image src={{book.img_src}}  alt="Photo of a Shiba Inu">
+      <mat-card-actions>
+        <button mat-button color="warn" (click)="deleteBook(book.id)">Удалить</button>
+        <!-- <button mat-button (click)="startEditing(book)">Редактировать</button> -->
+      </mat-card-actions>
     </mat-card>
   </div>
 </mat-list>

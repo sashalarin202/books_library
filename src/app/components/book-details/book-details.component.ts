@@ -1,4 +1,4 @@
-import { Component, Inject, OnDestroy } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Book } from '../../book.service';
 import { BookService } from '../../book.service';
@@ -23,7 +23,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
   templateUrl: './book-details.component.html',
   styleUrls: ['./book-details.component.scss']
 })
-export class BookDetailsComponent implements OnDestroy {
+export class BookDetailsComponent implements OnInit, OnDestroy {
   isEditing = false;
   originalData: Book;
 
@@ -33,6 +33,10 @@ export class BookDetailsComponent implements OnDestroy {
     private bookService: BookService
   ) {
     this.originalData = { ...data };
+  }
+
+  ngOnInit() {
+    this.isEditing = !this.data.id;
   }
 
   ngOnDestroy() {
@@ -46,8 +50,14 @@ export class BookDetailsComponent implements OnDestroy {
   }
 
   saveChanges() {
-    this.bookService.updateBook(this.data);
+    if (!this.data.id) {
+      this.data.id = this.generateId();
+      this.bookService.addBook(this.data);
+    } else {
+      this.bookService.updateBook(this.data);
+    }
     this.isEditing = false;
+    this.dialogRef.close(this.data); // Закрываем диалог и возвращаем данные
   }
 
   cancelEditing() {
@@ -69,5 +79,9 @@ export class BookDetailsComponent implements OnDestroy {
       this.cancelEditing();
     }
     this.dialogRef.close();
+  }
+
+  private generateId(): string {
+    return Math.random().toString(36).substring(2, 15);
   }
 }
