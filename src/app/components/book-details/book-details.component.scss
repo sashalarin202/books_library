@@ -27,6 +27,9 @@ mat-card {
         mat-form-field{
             padding-right: 15px;
 
+            &.input-Title {
+                height: 35px;
+            }
         }
 
         .description{

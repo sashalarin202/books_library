@@ -14,10 +14,23 @@ mat-list{
             display: flex;
             width: 300px;
             margin: 10px;
+            align-items: center;
 
             mat-card-header{
                 display: flex;
                 justify-content: center;
+            }
+
+            .img-wrapper{
+                height: 313px;
+                width: 217px;
+            }
+
+            mat-card-actions{
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                width: 100%;
             }
             
             img{

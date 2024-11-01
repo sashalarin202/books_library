@@ -7,10 +7,6 @@
     [ngClass]="{ 'image-normal': !isEditing, 'image-small': isEditing }" />
   </div>
   <mat-card-content>
-    <mat-form-field  *ngIf="!data.id" appearance="outline" class="input-imgLink">
-      <mat-label>Title</mat-label>
-      <input matInput [(ngModel)]="data.title" />
-    </mat-form-field>
     <h3 *ngIf="data.id" mat-card-title>{{ data.title }}</h3>
     <div class="description" *ngIf="!isEditing; else editMode">
       <p><strong>Автор:</strong> {{ data.author }}</p>
@@ -18,6 +14,11 @@
       <p><strong>Описание:</strong> {{ data.description }}</p>
     </div>
     <ng-template #editMode>
+      <mat-form-field  *ngIf="!data.id" appearance="outline" class="input-Title">
+        <mat-label>Title</mat-label>
+        <input matInput [(ngModel)]="data.title" />
+      </mat-form-field> 
+
       <div class="description">
         <mat-form-field appearance="outline" class="input-imgLink">
           <mat-label>Link</mat-label>
