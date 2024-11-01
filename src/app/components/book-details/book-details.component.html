@@ -1,43 +1,47 @@
-<mat-card appearance="outlined">
+<mat-card appearance="outlined" [formGroup]="bookForm">
   <div class="img-wrapper">
     <img  
-    mat-card-image 
-    [src]="data.img_src" 
-    alt="no image"
-    [ngClass]="{ 'image-normal': !isEditing, 'image-small': isEditing }" />
+      mat-card-image 
+      [src]="bookForm.get('img_src')?.value" 
+      alt="no image"
+      [ngClass]="{ 'image-normal': !isEditing, 'image-small': isEditing }" 
+    />
   </div>
   <mat-card-content>
-    <h3 *ngIf="data.id" mat-card-title>{{ data.title }}</h3>
+    <h3 *ngIf="bookForm.get('id')?.value" mat-card-title>
+      {{ bookForm.get('title')?.value }}
+    </h3>
     <div class="description" *ngIf="!isEditing; else editMode">
-      <p><strong>Автор:</strong> {{ data.author }}</p>
-      <p><strong>Год:</strong> {{ data.year }}</p>
-      <p><strong>Описание:</strong> {{ data.description }}</p>
+      <p><strong>Автор:</strong> {{ bookForm.get('author')?.value }}</p>
+      <p><strong>Год:</strong> {{ bookForm.get('year')?.value }}</p>
+      <p><strong>Описание:</strong> {{ bookForm.get('description')?.value }}</p>
     </div>
+
     <ng-template #editMode>
-      <mat-form-field  *ngIf="!data.id" appearance="outline" class="input-Title">
+      <mat-form-field *ngIf="!bookForm.get('id')?.value" appearance="outline" class="input-Title">
         <mat-label>Title</mat-label>
-        <input matInput [(ngModel)]="data.title" />
+        <input matInput formControlName="title" />
       </mat-form-field> 
 
       <div class="description">
         <mat-form-field appearance="outline" class="input-imgLink">
           <mat-label>Link</mat-label>
-          <input matInput [(ngModel)]="data.img_src" />
+          <input matInput formControlName="img_src" />
         </mat-form-field>
 
         <mat-form-field appearance="outline">
           <mat-label>Автор</mat-label>
-          <input matInput [(ngModel)]="data.author" />
+          <input matInput formControlName="author" />
         </mat-form-field>
   
         <mat-form-field appearance="outline">
           <mat-label>Год</mat-label>
-          <input matInput [(ngModel)]="data.year" type="number" />
+          <input matInput formControlName="year" type="number" />
         </mat-form-field>
   
         <mat-form-field appearance="outline">
           <mat-label>Описание</mat-label>
-          <textarea matInput [(ngModel)]="data.description"></textarea>
+          <textarea matInput formControlName="description"></textarea>
         </mat-form-field>
       </div>
     </ng-template>

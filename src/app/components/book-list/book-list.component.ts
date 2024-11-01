@@ -34,7 +34,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
       ])
     ])
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush 
+  changeDetection: ChangeDetectionStrategy.Default 
 })
 export class BookListComponent {
   books = computed(() => this.bookService.books());

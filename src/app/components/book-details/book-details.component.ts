@@ -1,11 +1,11 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Book } from '../../book.service';
 import { BookService } from '../../book.service';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
@@ -16,7 +16,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     CommonModule,
     MatButtonModule,
     MatCardModule,
-    FormsModule,
+    ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
   ],
@@ -26,17 +26,28 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 export class BookDetailsComponent implements OnInit, OnDestroy {
   isEditing = false;
   originalData: Book;
+  bookForm: FormGroup;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: Book & { isEditing?: boolean },
     private dialogRef: MatDialogRef<BookDetailsComponent>,
-    private bookService: BookService
+    private bookService: BookService,
+    private fb: FormBuilder
   ) {
     this.originalData = { ...data };
+
+    this.bookForm = this.fb.group({
+      id: [this.data.id],
+      title: [this.data.title, Validators.required],
+      img_src: [this.data.img_src, Validators.required],
+      author: [this.data.author, Validators.required],
+      year: [this.data.year, [Validators.required, Validators.min(0)]],
+      description: [this.data.description, Validators.required],
+    });
   }
 
   ngOnInit() {
-    this.isEditing = !!this.data.isEditing
+    this.isEditing = !!this.data.isEditing;
   }
 
   ngOnDestroy() {
@@ -47,23 +58,26 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
 
   startEditing() {
     this.isEditing = true;
+    this.bookForm.patchValue(this.originalData);
   }
 
   saveChanges() {
-    if (!this.data.id) {
-      this.data.id = this.generateId();
-      this.bookService.addBook(this.data);
+    if (!this.bookForm.valid) return;
+
+    const formData: Book = this.bookForm.value;
+
+    if (!formData.id) {
+      formData.id = this.generateId();
+      this.bookService.addBook(formData);
     } else {
-      this.bookService.updateBook(this.data);
+      this.bookService.updateBook(formData);
     }
     this.isEditing = false;
-    this.dialogRef.close(this.data); // Закрываем диалог и возвращаем данные
+    this.dialogRef.close(formData);
   }
 
   cancelEditing() {
-    this.data.author = this.originalData.author;
-    this.data.year = this.originalData.year;
-    this.data.description = this.originalData.description;
+    this.bookForm.patchValue(this.originalData);
     this.isEditing = false;
   }
 
