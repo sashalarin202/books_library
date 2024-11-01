@@ -72,8 +72,8 @@ export class BookListComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.bookService.updateBook(result);
-        this.filterBooks();
       }
+      this.filterBooks();
     });
   }
 
@@ -100,12 +100,8 @@ export class BookListComponent {
   deleteBook(id: string): void {
     const confirmation = confirm('Вы уверены, что хотите удалить эту книгу?');
     if (confirmation) {
-      try {
-        this.bookService.deleteBook(id);
-        this.filterBooks();
-      } catch (error) {
-        console.error('Ошибка при удалении книги:', error);
-      }
+      this.bookService.deleteBook(id);
+      this.filterBooks();
     }
   }
 }
