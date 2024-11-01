@@ -1,27 +1,27 @@
-# BookManagementApp
+# Book Library
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.0.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.
 
-## Development server
+## Description
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+This project utilizes **Angular 18** with reactive forms and **Angular Material** components. Data is managed using **signals** technology. The application is deployed on **Vercel** and can be accessed via the following link: [Live Demo](https://books-library-woad.vercel.app/).
 
-## Code scaffolding
+## Installation
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+To install the project, follow these steps:
 
-## Build
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/your-repo-name.git
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+2. Navigate to the project folder:
+   ```bash
+   cd book-management-app
 
-## Running unit tests
+3. Install all dependencies:
+   ```bash
+   npm install
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+4. Run the project in development mode:
+   ```bash
+   ng serve
