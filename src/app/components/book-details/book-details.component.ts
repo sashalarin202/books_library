@@ -39,10 +39,10 @@ export class BookDetailsComponent implements OnInit, OnDestroy {
     this.bookForm = this.fb.group({
       id: [this.data.id],
       title: [this.data.title, Validators.required],
-      img_src: [this.data.img_src, Validators.required],
+      img_src: [this.data.img_src],
       author: [this.data.author, Validators.required],
       year: [this.data.year, [Validators.required, Validators.min(0)]],
-      description: [this.data.description, Validators.required],
+      description: [this.data.description],
     });
   }
 
