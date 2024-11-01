@@ -55,7 +55,7 @@ export class BookListComponent {
   }
 
   trackByFn(index: number, book: Book): string {
-    return `${book.id}-${book.title}`; // Уникальный идентификатор с учетом названия
+    return `${book.id}-${book.title}`;
   }
 
   filterBooks(): void {
