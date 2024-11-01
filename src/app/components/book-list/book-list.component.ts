@@ -55,7 +55,7 @@ export class BookListComponent {
   }
 
   trackByFn(index: number, book: Book): string {
-    return book.id;
+    return `${book.id}-${book.title}`; // Уникальный идентификатор с учетом названия
   }
 
   filterBooks(): void {
@@ -67,7 +67,14 @@ export class BookListComponent {
   }
 
   openBookDialog(book: Book, isEditing: boolean = false): void {
-    this.dialog.open(BookDetailsComponent, { data: { ...book, isEditing } });
+    const dialogRef = this.dialog.open(BookDetailsComponent, { data: { ...book, isEditing } });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.bookService.updateBook(result);
+        this.filterBooks();
+      }
+    });
   }
 
   openAddBookDialog(): void {
