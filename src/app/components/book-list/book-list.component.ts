@@ -44,6 +44,9 @@ export class BookListComponent {
     private dialog: MatDialog
   ) {}
 
+  trackByFn(index: number, book: Book): string {
+    return book.id;
+  }
 
   openBookDialog(book: Book, isEditing: boolean = false): void {
     this.dialog.open(BookDetailsComponent, { data: { ...book, isEditing } });
