@@ -8,6 +8,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
 
 @Component({
   selector: 'app-book-list',
@@ -20,6 +23,9 @@ import { animate, style, transition, trigger } from '@angular/animations';
     MatCardModule,
     MatButtonModule,
     MatIconModule,
+    MatFormFieldModule,
+    FormsModule,
+    MatInputModule,
   ],
   animations: [
     trigger('fadeOut', [
@@ -38,14 +44,26 @@ import { animate, style, transition, trigger } from '@angular/animations';
 })
 export class BookListComponent {
   books = computed(() => this.bookService.books());
+  searchQuery: string = '';
+  filteredBooks: Book[] = [];
 
   constructor(
     private bookService: BookService,
     private dialog: MatDialog
-  ) {}
+  ) {
+    this.filteredBooks = this.books();
+  }
 
   trackByFn(index: number, book: Book): string {
     return book.id;
+  }
+
+  filterBooks(): void {
+    const query = this.searchQuery.toLowerCase();
+    this.filteredBooks = this.books().filter(book => 
+      book.title.toLowerCase().includes(query) || 
+      book.author.toLowerCase().includes(query)
+    );
   }
 
   openBookDialog(book: Book, isEditing: boolean = false): void {
@@ -77,6 +95,7 @@ export class BookListComponent {
     if (confirmation) {
       try {
         this.bookService.deleteBook(id);
+        this.filterBooks();
       } catch (error) {
         console.error('Ошибка при удалении книги:', error);
       }

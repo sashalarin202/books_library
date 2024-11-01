@@ -1,12 +1,18 @@
 <h3 mat-subheader>Book List</h3>
-<button mat-raised-button class="sticky-button" (click)="openAddBookDialog()">
+
+<mat-form-field appearance="fill">
+  <mat-label>Search</mat-label>
+  <input matInput [(ngModel)]="searchQuery" (input)="filterBooks()" />
+</mat-form-field>
+<button mat-raised-button class="add-button" (click)="openAddBookDialog()">
   <mat-icon>add</mat-icon>
   Add New Book
 </button>
+
 <mat-list>
   <div class="book-list">
     <mat-card class="book-card" appearance="outlined" 
-              *ngFor="let book of books(); trackBy: trackByFn" 
+              *ngFor="let book of filteredBooks; trackBy: trackByFn" 
               (click)="openBookDetailsDialog(book)" 
               [@fadeOut] 
               [@fadeIn]>
